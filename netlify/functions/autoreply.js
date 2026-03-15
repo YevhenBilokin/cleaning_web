@@ -23,7 +23,7 @@ exports.handler = async (event) => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        from: "Cortix Rengøring <onboarding@resend.dev>",
+        from: "Cortix Rengøring <kontakt@cortix.dk>",
         to: email,
         subject: "Tak for din henvendelse",
         html: `
