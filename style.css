@@ -1101,3 +1101,72 @@ box-shadow:0 14px 28px rgba(37,99,235,.35);
   border-color:#2563eb;
   box-shadow:0 0 0 3px rgba(37,99,235,.15);
 }
+.formTrust{
+margin-top:12px;
+display:flex;
+flex-direction:column;
+gap:6px;
+font-size:14px;
+color:#ffffff;
+}
+
+.formTrust span{
+display:flex;
+align-items:center;
+gap:6px;
+}
+.btn.primary{
+transition:all .2s ease;
+}
+
+.btn.primary:hover{
+transform:translateY(-2px);
+box-shadow:0 10px 24px rgba(37,99,235,.25);
+}
+.btn.primary:active{
+transform:scale(.98);
+}
+
+.reviewsGrid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+gap:24px;
+margin-top:30px;
+}
+
+.reviewCard{
+background:#ffffff;
+border-radius:16px;
+padding:24px;
+box-shadow:0 10px 30px rgba(0,0,0,0.08);
+display:flex;
+flex-direction:column;
+gap:12px;
+}
+
+.reviewStars{
+color:#f59e0b;
+font-size:18px;
+letter-spacing:2px;
+}
+
+.reviewAuthor{
+font-weight:600;
+color:#334155;
+font-size:14px;
+}
+
+.trustpilotLink{
+margin-top:28px;
+text-align:center;
+}
+
+.trustpilotLink a{
+color:#2563eb;
+font-weight:600;
+text-decoration:none;
+}
+
+.trustpilotLink a:hover{
+text-decoration:underline;
+}
