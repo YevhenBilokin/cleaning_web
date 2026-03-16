@@ -1030,3 +1030,16 @@ h2{
 .hiddenTrap {
   display: none !important;
 }
+.heroPhoto{
+width:100%;
+border-radius:12px;
+object-fit:cover;
+}
+
+.servicePhoto{
+ width: 100%;
+  height: 240px;
+  object-fit: cover;
+  object-position: center;
+  border-radius: 16px;
+}
