@@ -1167,3 +1167,27 @@ text-decoration:none;
 text-decoration:underline;
 }
 
+
+.priceInfoBox{
+  margin-top: 22px;
+  border-radius: 18px;
+  background: rgba(255,255,255,.82);
+  border: 1px solid rgba(2,6,23,.08);
+  box-shadow: var(--shadowSoft);
+  padding: 20px;
+}
+
+.priceInfoBox h3{
+  margin: 0 0 10px;
+  color: var(--darkText);
+  letter-spacing: -0.2px;
+}
+
+.priceInfoList{
+  margin: 0;
+  padding-left: 18px;
+  display: grid;
+  gap: 8px;
+  color: var(--darkMuted);
+  font-weight: 600;
+}

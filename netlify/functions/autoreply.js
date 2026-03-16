@@ -31,7 +31,7 @@ exports.handler = async (event) => {
             <h2>Hej ${name},</h2>
             <p>Tak for din henvendelse til <strong>Cortix Rengøring</strong>.</p>
             <p>Vi har modtaget din besked og vender tilbage hurtigst muligt.</p>
-            <p>Med venlig hilsen<br>Cortix Rengøring<br>+45 71 31 78 15</p>
+            <p>Med venlig hilsen<br>Cortix Rengøring<br>+45 71 55 25 27</p>
           </div>
         `,
       }),
