@@ -123,6 +123,8 @@ const $$ = (sel, root = document) => Array.from(root.querySelectorAll(sel));
   const rClient = document.getElementById("rClient");
   const rSqm = document.getElementById("rSqm");
 
+  const calcContactLink = document.getElementById("calcContactLink");
+
   function formatDKK(amount) {
     const rounded = Math.round(amount / 5) * 5;
     return new Intl.NumberFormat("da-DK").format(rounded) + " kr";
@@ -278,6 +280,19 @@ const $$ = (sel, root = document) => Array.from(root.querySelectorAll(sel));
     );
 
     console.log("Calculator lead:", { name: nm, phone: ph, email: em, ...input, price });
+    if (calcContactLink) {
+  const params = new URLSearchParams({
+    name: nm,
+    phone: ph,
+    email: em,
+    service: serviceLabel(input.service),
+    type: typeLabel(input.service, input.clientType),
+    sqm: `${input.sqm} m²`,
+    estimate: formatDKK(price),
+  });
+
+  calcContactLink.href = `kontakt.html?${params.toString()}`;
+}
   });
 
   resetBtn?.addEventListener("click", () => {
@@ -351,4 +366,40 @@ const $$ = (sel, root = document) => Array.from(root.querySelectorAll(sel));
     success.classList.add("hidden");
     form.classList.remove("hidden");
   });
+})();
+
+// Autofill contact form from calculator URL params
+(() => {
+  const nameInput = document.getElementById("cName");
+  const phoneInput = document.getElementById("cPhone");
+  const emailInput = document.getElementById("cEmail");
+  const msgInput = document.getElementById("cMsg");
+
+  if (!nameInput || !phoneInput || !emailInput || !msgInput) return;
+
+  const params = new URLSearchParams(window.location.search);
+
+  const name = params.get("name") || "";
+  const phone = params.get("phone") || "";
+  const email = params.get("email") || "";
+  const service = params.get("service") || "";
+  const type = params.get("type") || "";
+  const sqm = params.get("sqm") || "";
+  const estimate = params.get("estimate") || "";
+
+  if (name) nameInput.value = name;
+  if (phone) phoneInput.value = phone;
+  if (email) emailInput.value = email;
+
+  if (service || sqm || estimate) {
+    msgInput.value =
+`Forespørgsel fra prisberegner:
+
+Service: ${service}
+Type: ${type}
+Areal: ${sqm}
+Vejledende pris: ${estimate}
+
+Jeg vil gerne høre mere om opgaven.`;
+  }
 })();

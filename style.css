@@ -1043,3 +1043,61 @@ object-fit:cover;
   object-position: center;
   border-radius: 16px;
 }
+.hiddenTrap {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  height: 0 !important;
+  overflow: hidden !important;
+  position: absolute !important;
+  left: -9999px !important;
+}
+
+.btn.primary{
+box-shadow:0 10px 20px rgba(37,99,235,.25);
+}
+
+.btn.primary:hover{
+transform:translateY(-2px);
+box-shadow:0 14px 28px rgba(37,99,235,.35);
+}
+
+
+
+
+
+/* Contact form text fix */
+
+.form input,
+.form textarea {
+  color: #0f172a;          /* тёмный текст */
+  background: #ffffff;     /* белый фон */
+}
+
+.form input::placeholder,
+.form textarea::placeholder {
+  color: #64748b;          /* более читаемый placeholder */
+  opacity: 1;
+}
+.contactTitle{
+  color:#0f172a;
+}
+
+.form label{
+  color:#ffffff;
+  font-weight:600;
+}
+.form input,
+.form textarea{
+  border:1px solid rgba(15,23,42,.15);
+  border-radius:10px;
+  padding:12px 14px;
+  transition:all .2s ease;
+}
+
+.form input:focus,
+.form textarea:focus{
+  outline:none;
+  border-color:#2563eb;
+  box-shadow:0 0 0 3px rgba(37,99,235,.15);
+}
