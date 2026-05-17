@@ -403,3 +403,214 @@ Vejledende pris: ${estimate}
 Jeg vil gerne høre mere om opgaven.`;
   }
 })();
+// GOOGLE MAP AREA CHECK
+
+function initMap() {
+
+  // MAP CENTER
+
+  const center = {
+    lat: 55.4038,
+    lng: 11.3544
+  };
+
+  // CREATE MAP
+
+  const map = new google.maps.Map(
+    document.getElementById("map"),
+    {
+      center,
+      zoom: 8,
+
+      mapTypeControl: false,
+      streetViewControl: false,
+      fullscreenControl: false,
+
+      styles: [
+        {
+          featureType: "poi",
+          stylers: [{ visibility: "off" }]
+        }
+      ]
+    }
+  );
+
+  // LOAD GEOJSON
+
+  map.data.loadGeoJson("service-area.geojson");
+
+  // STYLE AREA
+
+  map.data.setStyle({
+    fillColor: "#2563eb",
+    fillOpacity: 0.12,
+
+    strokeColor: "#2563eb",
+    strokeOpacity: 1,
+    strokeWeight: 3
+  });
+
+  // AUTOCOMPLETE
+
+  const input =
+    document.getElementById("autocomplete");
+
+  if (!input) return;
+
+  const autocomplete =
+    new google.maps.places.Autocomplete(input, {
+      componentRestrictions: { country: "dk" }
+    });
+
+  autocomplete.bindTo("bounds", map);
+
+  // RESULT BLOCK
+
+  const result =
+    document.getElementById("areaResult");
+
+  // BUTTON
+
+  const button =
+    document.getElementById("checkAreaBtn");
+
+  if (!button) return;
+
+  // MARKER
+
+  let marker = null;
+
+  // BUTTON CLICK
+
+  button.addEventListener("click", () => {
+
+    const place = autocomplete.getPlace();
+
+    // NO ADDRESS
+
+    if (!place || !place.geometry) {
+
+      result.innerHTML =
+        "⚠️ Vælg en adresse fra listen.";
+
+      result.style.color = "#dc2626";
+
+      return;
+    }
+
+    const location =
+      place.geometry.location;
+
+    // REMOVE OLD MARKER
+
+    if (marker) {
+      marker.setMap(null);
+    }
+
+    // CREATE MARKER
+
+    marker = new google.maps.Marker({
+      map,
+      position: location,
+
+      animation:
+        google.maps.Animation.DROP
+    });
+
+    // MOVE MAP
+
+    map.panTo(location);
+
+    map.setZoom(13);
+
+    // CHECK INSIDE AREA
+
+    let inside = false;
+
+    map.data.forEach((feature) => {
+
+      const geometry =
+        feature.getGeometry();
+
+      if (!geometry) return;
+
+      // POLYGON
+
+      if (
+        geometry.getType() === "Polygon"
+      ) {
+
+        const polygon =
+          new google.maps.Polygon({
+            paths:
+              geometry
+                .getArray()[0]
+                .getArray()
+          });
+
+        if (
+          google.maps.geometry.poly
+            .containsLocation(
+              location,
+              polygon
+            )
+        ) {
+          inside = true;
+        }
+      }
+
+      // MULTIPOLYGON
+
+      if (
+        geometry.getType() === "MultiPolygon"
+      ) {
+
+        geometry.getArray().forEach(
+          (polygonPart) => {
+
+            const polygon =
+              new google.maps.Polygon({
+                paths:
+                  polygonPart
+                    .getArray()[0]
+                    .getArray()
+              });
+
+            if (
+              google.maps.geometry.poly
+                .containsLocation(
+                  location,
+                  polygon
+                )
+            ) {
+              inside = true;
+            }
+
+          }
+        );
+      }
+
+    });
+
+    // RESULT
+
+    if (inside) {
+
+      result.innerHTML =
+        "✅ Ja! Vi arbejder i dette område.";
+
+      result.style.color =
+        "#16a34a";
+
+    } else {
+
+      result.innerHTML =
+        "📩 Kontakt os for vurdering af området.";
+
+      result.style.color =
+        "#f59e0b";
+    }
+
+  });
+
+}
